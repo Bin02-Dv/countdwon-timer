@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <div id="countdown-timer"></div>
+    <div>{{end_time}}</div>
+
+    <script>
+        // Use AJAX to fetch the remaining time from the server and update the countdown timer
+        function updateCountdownTimer() {
+            $.ajax({
+                url: '/get_remaining_time/',
+                type: 'GET',
+                success: function(data) {
+                    // Update the countdown timer with the remaining time
+                    $('#countdown-timer').text(data.remaining_time);
+                },
+                error: function(error) {
+                    console.error('Error fetching remaining time:', error);
+                }
+            });
+        }
+
+        // Update the countdown timer every second
+        setInterval(updateCountdownTimer, 1000);
+
+        // Initial update when the page loads
+        updateCountdownTimer();
+    </script>
+</body>
+</html>
